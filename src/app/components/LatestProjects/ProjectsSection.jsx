@@ -1,90 +1,94 @@
 "use client";
+import React, { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Modal from "./Modal";
-import React, { useState } from "react";
-
-
-const projectsData = [
-  {
-    id: 1,
-    title: "Holy Grail of the Median Empire",
-    description: "Projfdsgfsgdfgs",
-    image: "/images/projects/1.jpg",
-  },
-  {
-    id: 2,
-    title: "Acbatana Royal Cup",
-    description: "fsgfsgfsdfsgfdsgf",
-    image: "/images/projects/2.jpg",
-  },
-  {
-    id: 3,
-    title: "Project 3",
-    description: "Project 3 description",
-    image: "/images/projects/3.jpg",
-  },
-  {
-    id: 4,
-    title: "Project 4",
-    description: "Project 4 description",
-    image: "/images/projects/4.jpg",
-  },
-  {
-    id: 5,
-    title: "Holy Grail of the Temple of Abi in Urkish",
-    description: "Profdsgfsg",
-    image: "/images/projects/5.jpg",
-  },
-
-];
+import artworksData from "../../data/artworksData"; // Import the data
+import LazyLoad from "react-lazyload"; // Import lazy loading library
 
 const ProjectsSection = () => {
+  const [latestArtworks, setArtworks] = useState(artworksData);
   const [openModal, setOpenModal] = useState(null);
+  const [selectedArtwork, setSelectedArtwork] = useState(null);
 
-  const handleProjectClick = (projectId) => {
-    setOpenModal(projectId);
+  const handleProjectClick = useCallback((projectId) => {
+    const artwork = latestArtworks.find((artwork) => artwork.id === projectId);
+    setSelectedArtwork(artwork);
+    setOpenModal(true);
+  }, [latestArtworks]);
+
+  const closeModal = useCallback(() => {
+    setOpenModal(false);
+    setSelectedArtwork(null);
+  }, []);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+      },
+    },
   };
 
-  const closeModal = () => {
-    setOpenModal(null);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 0 },
+    visible: { opacity: 1, y: 0 },
   };
 
   return (
-    <section id="projects">
-      <h2 className="text-center text-4xl font-bold text-white mt-4 mb-8 md:mb-12">
-        My Latest Projects
+    <section id="projects" className="p-6">
+      <h2 className="text-center text-4xl font-bold text-black mt-4 mb-8 md:mb-12">
+        Latest Artworks
       </h2>
-      
-      <ul className="grid md:grid-cols-3 lg:grid-cols-3 gap-6 md:gap-4">
-        {projectsData.map((project) => (
-          <li key={project.id}>
-            <div className="project-card relative overflow-hidden rounded-lg bg-gray-800 group">
-              <div className="project-card__image h-full aspect-w-16 aspect-h-9 relative group">
+
+      <motion.ul
+        className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-2"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
+        {latestArtworks.slice(0, 6).map((artwork) => (
+          <motion.li
+            key={artwork.id}
+            className="project-card relative overflow-hidden rounded-sm bg-gray-800 group"
+            variants={itemVariants}
+          >
+            <div className="project-card__image h-full aspect-w-16 aspect-h-9 relative group">
+              <LazyLoad
+                height="100%"
+                offset={100}
+                placeholder={<img src="placeholder.jpg" alt="Loading..." className="w-full h-full object-cover" />}
+              >
                 <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover cursor-pointer"
-                  onClick={() => handleProjectClick(project.id)}
+                  src={artwork.images[0].image} // Assuming the first image is for the list
+                  className="w-full h-full object-cover cursor-pointer transition-transform duration-300 transform group-hover:scale-110"
+                  onClick={() => handleProjectClick(artwork.id)}
+                  alt={artwork.title}
                 />
-                
-                <div className="absolute inset-x-0 top-0 flex flex-col justify-center p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <h5 className="text-white text-xl font-semibold cursor-pointer" onClick={() => handleProjectClick(project.id)}>
-                    {project.title}
-                  </h5>
-                </div>
+              </LazyLoad>
+
+              <div className="absolute inset-x-0 top-0 flex flex-col justify-center p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <h5 className="text-white text-sm font-semibold cursor-pointer" onClick={() => handleProjectClick(artwork.id)}>
+                  {artwork.title}
+                </h5>
               </div>
             </div>
-          </li>
+          </motion.li>
         ))}
-      </ul>
+      </motion.ul>
 
-      {openModal && (
-        <Modal
-          imgUrl={projectsData[openModal - 1].image}
-          title={projectsData[openModal - 1].title}
-          description={projectsData[openModal - 1].description}
-          onClose={closeModal}
-        />
-      )}
+      <AnimatePresence>
+        {openModal && selectedArtwork && (
+          <Modal
+            imgUrl={selectedArtwork.images[0].image} // Assuming the first image is for the modal too
+            title={selectedArtwork.title}
+            description={selectedArtwork.description}
+            artwork={selectedArtwork}
+            onClose={closeModal}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 };

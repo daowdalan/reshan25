@@ -1,26 +1,28 @@
-import { useRef, useEffect, useState } from 'react';
+"use client"
+// useLazyAppear.js
+import { useState, useEffect } from 'react';
 
-function useLazyAppear(isVisible = false) {
-  const [lazyAppear, setLazyAppear] = useState(isVisible);
-  const elementRef = useRef(null);
+const useLazyAppear = () => {
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting) {
-        setLazyAppear(true);
-        observer.unobserve(elementRef.current);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5, // Adjust this threshold as needed
       }
-    });
+    );
 
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
+    observer.observe(document.querySelector('.lazy-appear')); // Adjust the selector as needed
 
     return () => observer.disconnect();
-  }, [elementRef]);
+  }, []);
 
-  return { lazyAppear, elementRef };
-}
+  return isVisible;
+};
 
 export default useLazyAppear;

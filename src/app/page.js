@@ -1,6 +1,6 @@
 import HeroSection from "./components/HomePage/HeroSection";
 import AchievementsSection from "./components/HomePage/AchievementsSection";
-import ProjectsSection from "./components/LatestProjects/ProjectsSection";
+import LatestProjects from "./components/LatestProjects/LatestProjects";
 
 
 export const metadata = {
@@ -11,11 +11,10 @@ export const metadata = {
 
 export default function Home() {
   return (
-      <div className="container mt-24 mx-auto px-12 py-4">
+      <div className="container mt-16 mx-auto">
         <HeroSection />
         <AchievementsSection />
-        <ProjectsSection />
-        
+        <LatestProjects />
       </div>
   );
 }

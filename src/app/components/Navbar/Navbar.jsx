@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { usePathname } from 'next/navigation';
+import "./Navbar.css";
 
 const navLinks = [
   {
@@ -10,9 +11,10 @@ const navLinks = [
     path: "/about",
   },
   {
-    title: "Projects",
-    path: "/projects",
+    title: "Sculptures",
+    path: "/sculptures",
   },
+
   {
     title: "Contact",
     path: "/contact",
@@ -45,23 +47,24 @@ const Navbar = () => {
   };
 
   return (
-    <nav ref={navbarRef} className="fixed mx-auto border border-[#33353F] top-0 left-0 right-0 z-10 bg-[#121212] bg-opacity-100">
-      <div className="flex container lg:py-4 flex-wrap items-center justify-between mx-auto px-4 py-2">
-        <Link href={"/"} className="text-2xl md:text-5xl text-white font-semibold" onClick={handleLinkClick}> 
-          RESHAN-ART
+  <nav ref={navbarRef} className="fixed mx-auto border-b border-[#010101] top-0 left-0 right-0 z-10 bg-[#ffffff] bg-opacity-100">
+      <div className="flex  flex-wrap items-center justify-between mx-auto px-4 py-2 lg:py-4">
+      <Link href={"/"} className=" italianno-regular  text-xl md:text-4xl text-black " onClick={handleLinkClick}>
+        RESHAN ART
         </Link>
+
         <div className="mobile-menu block md:hidden">
           {!navbarOpen ? (
             <button
               onClick={() => setNavbarOpen(true)}
-              className="flex items-center px-3 py-2 border rounded border-slate-200 text-slate-200 hover:text-white hover:border-white"
+              className="flex items-center px-3 py-2 border rounded border-black text-black hover:text-black hover:border-black"
             >
               <Bars3Icon className="h-5 w-5" />
             </button>
           ) : (
             <button
               onClick={() => setNavbarOpen(false)}
-              className="flex items-center px-3 py-2 border rounded border-slate-200 text-slate-200 hover:text-white hover:border-white"
+              className="flex items-center px-3 py-2 border rounded border-black text-black hover:text-black hover:border-black"
             >
               <XMarkIcon className="h-5 w-5" />
             </button>
@@ -73,7 +76,7 @@ const Navbar = () => {
               const isActive = pathname.startsWith(link.path);
               return (
                 <li key={index}>
-                  <Link href={link.path} onClick={handleLinkClick} className={!isActive?`block py-2 pl-3 pr-4 text-[#ADB7BE] sm:text-xl rounded md:p-0`:`block py-2 pl-3 pr-4 text-[#9a3a9a] sm:text-xl rounded md:p-0`}>
+                  <Link href={link.path} onClick={handleLinkClick} className={!isActive?`block py-2 pl-3 pr-4 text-[#000000] sm:text-xl rounded md:p-0`:`block py-2 pl-3 pr-4 text-[#9a3a9a] sm:text-xl rounded md:p-0`}>
                     {link.title}
                   </Link>
                 </li>
@@ -88,7 +91,7 @@ const Navbar = () => {
             const isActive = pathname.startsWith(link.path);
             return (
               <li key={index}>
-                <Link href={link.path} onClick={handleLinkClick} className={!isActive?`block py-2 pl-3 pr-4 text-[#ADB7BE] sm:text-xl rounded md:p-0`:`block py-2 pl-3 pr-4 text-[#9a3a9a] sm:text-xl rounded md:p-0`} >
+                <Link href={link.path} onClick={handleLinkClick} className={!isActive?`block py-2 pl-3 pr-4 text-black sm:text-xl rounded md:p-0`:`block py-2 pl-3 pr-4 text-[#9a3a9a] sm:text-xl rounded md:p-0`} >
                   {link.title}
                 </Link>
               </li>
