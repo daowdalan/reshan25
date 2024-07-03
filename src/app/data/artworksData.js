@@ -93,6 +93,18 @@ const artworksData = [
     dimensions: "unknown",
     work_date: "2010",
   },
+  {
+    id: 9,
+    images: [
+      { image: "/images/9-1.jpg" },
+    ],
+    title: "Hestiria",
+    description: "xx",
+    dimensions: "unknown",
+    work_date: "2010",
+  },
+
+  
 ];
 
 export default artworksData;

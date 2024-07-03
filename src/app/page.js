@@ -13,7 +13,7 @@ export default function Home() {
   return (
       <div className="container mt-16 mx-auto">
         <HeroSection />
-        <AchievementsSection />
+        {/* <AchievementsSection /> */}
         <LatestProjects />
       </div>
   );

@@ -11,8 +11,8 @@ import { IoLogoYoutube } from "react-icons/io5";
 
 const HeroSection = () => {
   return (
-    <section className="lg:py-16">
-      <div className="grid grid-cols-1 sm:grid-cols-12">
+    <section className="h-screen lg:py-16">
+      <div className="grid grid-cols-1 sm:grid-cols-12 h-full">
         <div className="col-span-1 hidden lg:flex flex-col items-center justify-center text-black">
           <a href="https://www.facebook.com/reshanroman.amude" target="_blank" className="mb-10">
             <FaFacebookF className="w-10 h-10" />
@@ -51,14 +51,14 @@ const HeroSection = () => {
             voluptuous.
           </p>
           <div>
-            <Link
+            {/* <Link
               href="/contact"
               className="px-1 inline-block py-1 w-full sm:w-fit rounded-full bg-gradient-to-br from-primary-800 to-secondary-500 hover:bg-slate-800 text-white mt-3"
             >
               <span className="block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-2">
-                Contact us
+                Latest Artworks
               </span>
-            </Link>
+            </Link> */}
           </div>
         </motion.div>
         
@@ -66,9 +66,9 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="col-span-4 place-self-center mt-4 lg:mt-0"
+          className="col-span-4 place-self-center lg:mt-0 sm:mt-40 "
         >
-          <div className="rounded-full bg-[#000000] w-[250px] h-[250px] lg:w-[400px] lg:h-[400px] relative">
+          <div className="rounded-full bg-[#000000] w-[350px] h-[350px] lg:w-[400px] lg:h-[400px] relative">
             <Image
               src="/images/resh.jpg"
               alt="hero image"
