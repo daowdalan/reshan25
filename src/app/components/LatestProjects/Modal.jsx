@@ -146,6 +146,5 @@ const Modal = React.memo(({ artwork, onClose }) => {
   );
 });
 
-Modal.displayName = 'Modal';
 
 export default Modal;
